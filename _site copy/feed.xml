@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ahmadreza's blog</title>
+    <description>This site is my personal notes and opinions about software development</description>
+    <link>http://0.0.0.0:4000/</link>
+    <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Unit testing ModelBinders in ASP.Net Web Api projects</title>
+        <description>
+          
+          My Colleague Matt Davies has done a blog post a couple of years ago about Unit testing MVC3/MVC4 Model Binders. This is a nice post but as you know Web Api Side of ASP.Net is usually using a different set of object model therefore the setting up the BindingContext would...
+        </description>
+        <pubDate>Mon, 04 Apr 2016 21:25:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2016/04/Unit-testing-ModelBinders-in-ASP.Net-Web-API-projects/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2016/04/Unit-testing-ModelBinders-in-ASP.Net-Web-API-projects/</guid>
+      </item>
+    
+      <item>
+        <title>First week at number one consulting company in Australia</title>
+        <description>
+          
+          I have been in IT industry for fifteen years and for last three and half years I been in consulting firm. I really like the type of work I usually do as a consultant. Issues that we have to deal with are usually different and more challenging. Systems we have...
+        </description>
+        <pubDate>Tue, 04 Nov 2014 23:22:00 +1100</pubDate>
+        <link>http://0.0.0.0:4000/2014/11/first-week-at-number-one-consulting-company-in-australia/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2014/11/first-week-at-number-one-consulting-company-in-australia/</guid>
+      </item>
+    
+      <item>
+        <title>AutoMapper and mapping Expressions</title>
+        <description>
+          
+          AutoMapper is a great library helps developer to almost get rid of left hand right hand assignment between different types. In real world C# .net applications there are lots of scenarios developer wants to map different types of objects to each other. Normally it happens in system boundaries, like between...
+        </description>
+        <pubDate>Sat, 20 Sep 2014 10:19:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2014/09/automapper-and-mapping-expressions/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2014/09/automapper-and-mapping-expressions/</guid>
+      </item>
+    
+      <item>
+        <title>Value type field members are in heap</title>
+        <description>
+          
+          I think developers are a bit confused about the concept of ValueTypes and Reference Type. Often I hear that all primitive data types and value types are in stack. First of all it is thread’s stack and it is not a single stack for application. Secondly, when we say value...
+        </description>
+        <pubDate>Fri, 31 Jan 2014 00:15:00 +1100</pubDate>
+        <link>http://0.0.0.0:4000/2014/01/value-type-field-members-are-in-heap/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2014/01/value-type-field-members-are-in-heap/</guid>
+      </item>
+    
+      <item>
+        <title>IL superset of all .net languages</title>
+        <description>
+          
+          In .net world you can choose your language and write your application with best language which matches your requirements. Different languages has different paradigm. For example C# started with static/strongly type paragoge  but over years it has been evolved and now it does support functional programming as well as dynamic....
+        </description>
+        <pubDate>Wed, 22 Jan 2014 23:14:00 +1100</pubDate>
+        <link>http://0.0.0.0:4000/2014/01/il-superset-of-all-net-languages/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2014/01/il-superset-of-all-net-languages/</guid>
+      </item>
+    
+      <item>
+        <title>Quick Note: Memory Leak Or Missing Configuration </title>
+        <description>
+          
+          Imagine you have multiple instances of SQL server on your server and one of them is using almost all of available memory and second one is facing memory shortage. What are possible Cause for this symptom. Does one of application have memory leak? The answer is NO, When you install multiple instances...
+        </description>
+        <pubDate>Mon, 14 Nov 2011 17:24:00 +1100</pubDate>
+        <link>http://0.0.0.0:4000/2011/11/quick-note-memory-leak-or-missing-configuration/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2011/11/quick-note-memory-leak-or-missing-configuration/</guid>
+      </item>
+    
+      <item>
+        <title>How to sign the XBAP with your own certificate</title>
+        <description>
+          
+          I am writing a series of posts about WPF Browser Application, XBAP  and configuration tips. I’m going to host this application in IIS 5.1 and I developed them in .Net 3.5. The reason I have chosen IIS5.1 and .Net 3.5 is because of challenges I had in one of my...
+        </description>
+        <pubDate>Fri, 20 May 2011 09:30:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2011/05/how-to-sign-the-xbap-with-your-own-certificate/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2011/05/how-to-sign-the-xbap-with-your-own-certificate/</guid>
+      </item>
+    
+      <item>
+        <title>How to host a windows form application inside XBAP</title>
+        <description>
+          
+          I am writing a series of posts about WPF Browser Application, XBAP  and configuration tips. I’m going to host this application in IIS 5.1 and I developed them in .Net 3.5. The reason I have chosen IIS5.1 and .Net 3.5 is because of challenges I had in one of my...
+        </description>
+        <pubDate>Tue, 17 May 2011 09:29:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2011/05/how-to-host-a-windows-form-application-inside-xbap/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2011/05/how-to-host-a-windows-form-application-inside-xbap/</guid>
+      </item>
+    
+      <item>
+        <title>How to create a simple Browser Enabled WPF application</title>
+        <description>
+          
+          I am writing a series of posts about WPF Browser Application, XBAP  and configuration tips. I’m going to host this application in IIS 5.1 and I developed them in .Net 3.5. The reason I have chosen IIS5.1 and .Net 3.5 is because of challenges I had in one of my...
+        </description>
+        <pubDate>Thu, 12 May 2011 14:59:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2011/05/how-to-create-a-simple-browser-enabled-wpf-application/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2011/05/how-to-create-a-simple-browser-enabled-wpf-application/</guid>
+      </item>
+    
+      <item>
+        <title>HOW TO propagate WCF Impersonation to COM objects</title>
+        <description>
+          
+          I was working on a project to write a wrapper on a COM component in WCF. The COM object needs impersonation in some levels to provide certain functionalities to impersonated user. Basically impersonation in .Net application doesn’t propagate COM calls. I’ve seen following sentence in How To: Use Impersonation and...
+        </description>
+        <pubDate>Thu, 16 Sep 2010 17:19:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2010/09/how-to-propagate-wcf-impersonation-to-com-objects/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2010/09/how-to-propagate-wcf-impersonation-to-com-objects/</guid>
+      </item>
+    
+      <item>
+        <title>Updating my using with Windows Live Writer</title>
+        <description>
+          
+          I didn’t know about this sophisticated application so called “Windows Live Writer”. Actually quiet frequently I was looking for an HTML editor to write my blog post and then update my blog. Because HTML edit which comes with BlogEngine.Net is not easy to use – and its the same problem...
+        </description>
+        <pubDate>Wed, 04 Aug 2010 19:46:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2010/08/updating-my-using-with-windows-live-writer/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2010/08/updating-my-using-with-windows-live-writer/</guid>
+      </item>
+    
+      <item>
+        <title>How to mess with &amp;quot;click test&amp;quot; facebook application</title>
+        <description>
+          
+          Couple of days ago I came across a fantastic challenging application in Facebook which is called “click test”. This application measures your click per second and you have to click as much as you can in 10 seconds. For sure in my 130 friend there are many who can click...
+        </description>
+        <pubDate>Tue, 27 Jul 2010 05:07:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2010/07/how-to-mess-with-click-test-facebook-application/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2010/07/how-to-mess-with-click-test-facebook-application/</guid>
+      </item>
+    
+      <item>
+        <title>WEBCAMPS Sydney Day 1 / Part 2</title>
+        <description>
+          
+          As first day continued Scott and James tried to demonstrate Microsoft ASP.net 4.0 and MVC 2. Same question about ASP.Net was asked and was answered. Fellows was worried about replacement of ASP.Net with MVC 2 and as it was answered and like before Scott and James defined that ASP.Net is...
+        </description>
+        <pubDate>Fri, 09 Jul 2010 05:59:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2010/07/webcamps-sydney-day-1-part-2/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2010/07/webcamps-sydney-day-1-part-2/</guid>
+      </item>
+    
+      <item>
+        <title>WEBCAMPS Sydney Day 1 / Part 1</title>
+        <description>
+          
+          WEBCAMP was a 2 days event that provides a chance to learn and build projects based on Microsoft Web Platform. WEBCAMPS is held in different cities around the word and I had chance to participate in Sydney WEBCAMP event in 28 and 29 of May 2010. Interesting point is performers...
+        </description>
+        <pubDate>Mon, 07 Jun 2010 01:39:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2010/06/webcamps-sydney-day-1-part-1/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2010/06/webcamps-sydney-day-1-part-1/</guid>
+      </item>
+    
+      <item>
+        <title>Starting an Australian life</title>
+        <description>
+          
+              After 22 months our (me and my wife) Australian permanent visa is granted. These 22 months of my life was so hectic. This is a big break in my life and I'm looking forward for shiny future. My visa was issued on 18 of January and new level...
+        </description>
+        <pubDate>Sun, 31 Jan 2010 20:15:00 +1100</pubDate>
+        <link>http://0.0.0.0:4000/2010/01/starting-an-australian-life/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2010/01/starting-an-australian-life/</guid>
+      </item>
+    
+      <item>
+        <title>Value type property and C# compilation error</title>
+        <description>
+          
+          Two days ago a question was asked in StackOverflow.com and I found this question so good to prepare a post. I want to explain this question: Petr asked: I do not understand why there is Control.padding.all which is int and according to hint there is set as well as get...
+        </description>
+        <pubDate>Sat, 28 Nov 2009 21:48:00 +1100</pubDate>
+        <link>http://0.0.0.0:4000/2009/11/value-type-property-and-c-compilation-error/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2009/11/value-type-property-and-c-compilation-error/</guid>
+      </item>
+    
+      <item>
+        <title>Screen size in WPF applications</title>
+        <description>
+          
+          I was about to write a simple application deal with screen size in WPF. Previously in windows form applications we could get WorkingArea parameters from System.Windows.Forms.WorkingArea but in WPF application typically we don’t have this assembly (however this assembly could be added to project). In WPF applications screen size could...
+        </description>
+        <pubDate>Fri, 20 Nov 2009 10:31:00 +1100</pubDate>
+        <link>http://0.0.0.0:4000/2009/11/screen-size-in-wpf-applications/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2009/11/screen-size-in-wpf-applications/</guid>
+      </item>
+    
+      <item>
+        <title>LINQ-To-SQL Uses magic ROW_NUMBER() function</title>
+        <description>
+          
+          Recently I founded that LINQ-To-SQL Uses magic ROW_NUMBER() function. ROW_NUMBER() function is a magic function which was added in SQL Server 2005. Microsoft put this function in version 2005 so that developers will not take it for granted and appreciate it. ROW_NUMBER “ returns the sequential number of a row...
+        </description>
+        <pubDate>Wed, 05 Aug 2009 23:39:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2009/08/linq-to-sql-uses-magic-row_number-function/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2009/08/linq-to-sql-uses-magic-row_number-function/</guid>
+      </item>
+    
+      <item>
+        <title>Migrating to BlogEngine.net</title>
+        <description>
+          
+          Finally, I’ve decided to convert my weblog engine from Graffiti CMS to BlogEngine. Moving to BlogEngine doesn’t mean weakness of Graffiti blogging engine or indicating any problem. But after surveying BlogEngine and comparing to current version of Graffity CMS I’ve found lots of features more sophisticated than Graffiti and in...
+        </description>
+        <pubDate>Wed, 24 Jun 2009 16:12:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2009/06/migrating-to-blogengine-net/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2009/06/migrating-to-blogengine-net/</guid>
+      </item>
+    
+      <item>
+        <title>Code contracts (Part 2): Creating my first project with code contracts</title>
+        <description>
+          
+          I downloaded code contracts from here. After installing code contract, I tried to create my first project with code contracts. I created new console project name CodeContractTest . I added reference to Microsoft.Contracts library which is appeared in .Net references after installation. I wrote following code this is clearly compiled...
+        </description>
+        <pubDate>Fri, 22 May 2009 04:35:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2009/05/code-contracts-part-2-creating-my-first-project-with-code-contracts/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2009/05/code-contracts-part-2-creating-my-first-project-with-code-contracts/</guid>
+      </item>
+    
+  </channel>
+</rss>

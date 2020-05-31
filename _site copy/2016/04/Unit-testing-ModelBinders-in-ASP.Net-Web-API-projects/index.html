@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>Unit testing ModelBinders in ASP.Net Web Api projects</title>
+
+  <meta name="author" content="Ahmad Atighechi" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ahmadreza's blog - This site is my personal notes and opinions about software development" href="http://0.0.0.0:4000/feed.xml" />
+
+  
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M98DF4N');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+<!-- Google Analytics -->
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-4419700-1', 'auto');
+    ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Unit testing ModelBinders in ASP.Net Web Api projects" />
+  
+
+   
+  <meta property="og:description" content="My Colleague Matt Davies has done a blog post a couple of years ago about Unit testing MVC3/MVC4 Model Binders. This is a nice post but as you know Web Api Side of ASP.Net is usually using a different set of object model therefore the setting up the BindingContext would...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="http://0.0.0.0:4000/2016/04/Unit-testing-ModelBinders-in-ASP.Net-Web-API-projects/" />
+  <link rel="canonical" href="http://0.0.0.0:4000/2016/04/Unit-testing-ModelBinders-in-ASP.Net-Web-API-projects/" />
+  
+
+  
+  <meta property="og:image" content="http://0.0.0.0:4000/img/avatar-icon.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Unit testing ModelBinders in ASP.Net Web Api projects" />
+  
+
+  
+  <meta name="twitter:description" content="My Colleague Matt Davies has done a blog post a couple of years ago about Unit testing MVC3/MVC4 Model Binders. This is a nice post but as you know Web Api Side of ASP.Net is usually using a different set of object model therefore the setting up the BindingContext would...">
+  
+
+  
+  <meta name="twitter:image" content="http://0.0.0.0:4000/img/avatar-icon.png" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M98DF4N"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="http://0.0.0.0:4000/">Ahmadreza's blog</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/aboutme">About Me</a></li>
+          <li><a href="https://github.com/ahmad2x4/ahmadreza.com/issues/new">Contact</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://0.0.0.0:4000/">
+	      <img class="avatar-img" src="/img/avatar-icon.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Unit testing ModelBinders in ASP.Net Web Api projects</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on April 4, 2016</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>My Colleague Matt Davies has done a blog post a couple of years ago about <a href="https://mdavies.net/2013/06/07/unit-testing-mvc3mvc4-model-binders/">Unit testing MVC3/MVC4 Model Binders</a>. This is a nice post but as you know Web Api Side of ASP.Net is usually using a different set of object model therefore the setting up the <code class="highlighter-rouge">BindingContext</code> would be different than what we have in MVC. I also searched and did not find a good blog post about how to unit test ModelBinders in ASP.NEt Web Api project, so I decided to put together this post.</p>
+
+<p>Let’s assume we have following implementation of model binder which bind a sort expression like <code class="highlighter-rouge">FirstName desc</code> or <code class="highlighter-rouge">LastName</code> to a simple <code class="highlighter-rouge">class</code> structure which has <code class="highlighter-rouge">FieldName</code> and <code class="highlighter-rouge">Ascending</code> as <code class="highlighter-rouge">boolean</code> to indicate sorting direction. 
+Following is the code for <code class="highlighter-rouge">ModelBinder</code>:</p>
+
+<script src="https://gist.github.com/ahmad2x4/325c0a5adc0230f28e46cd11995c8bb2.js"> </script>
+
+<p>We want to write a few unit test to make sure logic of this ModelBinder is working and in each different test case we want to provide different value and check the result. In order to be able to call <code class="highlighter-rouge">.BindModel</code> we need two parameters <code class="highlighter-rouge">HttpActionContext</code> and <code class="highlighter-rouge">ModelBindingContext</code>. <code class="highlighter-rouge">HttpActionContext</code> can be completely mocked. We are using <a href="https://nsubstitute.github.io/">NSubstitute</a> as mocking framework. <code class="highlighter-rouge">ModelBindingContext</code> has a property called <code class="highlighter-rouge">ValueProvider</code> which obviously provide value of the model. So we create a <code class="highlighter-rouge">ModelBindingContext</code> and set the <code class="highlighter-rouge">ValueProvider</code> to a mocked version and keep the reference to be able to change value for each test.</p>
+
+<p>Following is the complete code for setting up the model binder and testing that.</p>
+
+<script src="https://gist.github.com/ahmad2x4/0b927ae129050cb6f01573530676d763.js"> </script>
+
+<p>In each unit test we set up the <code class="highlighter-rouge">_valueProvider</code> mock to return expected sortExpression and then call the method and assert on expected values.</p>
+
+<p>Simple!</p>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#.Net">.Net</a>
+          
+            <a href="/tags#Web API">Web API</a>
+          
+            <a href="/tags#C#">C#</a>
+          
+            <a href="/tags#Unit Test">Unit Test</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Unit+testing+ModelBinders+in+ASP.Net+Web+Api+projects&url=http%3A%2F%2F0.0.0.0%3A4000%2F2016%2F04%2FUnit-testing-ModelBinders-in-ASP.Net-Web-API-projects%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2F0.0.0.0%3A4000%2F2016%2F04%2FUnit-testing-ModelBinders-in-ASP.Net-Web-API-projects%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2014/11/first-week-at-number-one-consulting-company-in-australia/" data-toggle="tooltip" data-placement="top" title="First week at number one consulting company in Australia">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'ahmadreza';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="https://github.com/ahmad2x4" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/ahmad2x4" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li><li><a href="https://linkedin.com/in/ahmadreza" title="LinkedIn"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">LinkedIn</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Ahmad Atighechi
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://0.0.0.0:4000/">ahmadreza.com</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  </body>
+</html>

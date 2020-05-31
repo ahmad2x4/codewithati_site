@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>How to create a simple Browser Enabled WPF application</title>
+
+  <meta name="author" content="Ahmad Atighechi" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ahmadreza's blog - This site is my personal notes and opinions about software development" href="http://0.0.0.0:4000/feed.xml" />
+
+  
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M98DF4N');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+<!-- Google Analytics -->
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-4419700-1', 'auto');
+    ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="How to create a simple Browser Enabled WPF application" />
+  
+
+   
+  <meta property="og:description" content="I am writing a series of posts about WPF Browser Application, XBAP  and configuration tips. I’m going to host this application in IIS 5.1 and I developed them in .Net 3.5. The reason I have chosen IIS5.1 and .Net 3.5 is because of challenges I had in one of my...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="http://0.0.0.0:4000/2011/05/how-to-create-a-simple-browser-enabled-wpf-application/" />
+  <link rel="canonical" href="http://0.0.0.0:4000/2011/05/how-to-create-a-simple-browser-enabled-wpf-application/" />
+  
+
+  
+  <meta property="og:image" content="http://0.0.0.0:4000/img/avatar-icon.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="How to create a simple Browser Enabled WPF application" />
+  
+
+  
+  <meta name="twitter:description" content="I am writing a series of posts about WPF Browser Application, XBAP  and configuration tips. I’m going to host this application in IIS 5.1 and I developed them in .Net 3.5. The reason I have chosen IIS5.1 and .Net 3.5 is because of challenges I had in one of my...">
+  
+
+  
+  <meta name="twitter:image" content="http://0.0.0.0:4000/img/avatar-icon.png" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M98DF4N"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="http://0.0.0.0:4000/">Ahmadreza's blog</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/aboutme">About Me</a></li>
+          <li><a href="https://github.com/ahmad2x4/ahmadreza.com/issues/new">Contact</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://0.0.0.0:4000/">
+	      <img class="avatar-img" src="/img/avatar-icon.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>How to create a simple Browser Enabled WPF application</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on May 12, 2011</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><em>I am writing a series of posts about WPF Browser Application, XBAP  and configuration tips. I’m going to host this application in IIS 5.1 and I developed them in .Net 3.5. The reason I have chosen IIS5.1 and .Net 3.5 is because of challenges I had in one of my recent projects. Configuring this type of projects is different in other versions of IIS and .Net frameworks and they are not is subject of this post series.</em></p>
+
+<ol>
+  <li>How to create a simple Browser Enables WPF application</li>
+  <li><a href="https://ahmadreza.com/2011/05/17/how-to-host-a-windows-form-application-inside-xbap/">How to host a windows form application inside XBAP</a></li>
+  <li><a href="https://ahmadreza.com/2011/05/20/how-to-sign-the-xbap-with-your-own-certificate/">How to sign the XBAP with your own certificate</a>
+Firstly run Visual Studio 2010 and select new project from file menu</li>
+</ol>
+
+<p><img src="https://gkasoq.bay.livefilestore.com/y1pTyvopu7LF2C48XH1rU6cCIppkTTSRI2zbiG4IymcFYNyDvDYOAuiDPGP_BbwZCwfe_Msl-NT15LmvikS4opJ6IjFau3VEDJa/01ProjectType.png?psid=1" alt="" title="WPF Browser Application Template" /></p>
+
+<p>To create simple WPF browser application you need to select “WPF Browser Application” template from project templates. Once project template is created open Page1.xaml Xaml code and change Grid into following code</p>
+
+<p>[sourcecode language=”XML”]
+    &lt;Grid&gt;
+        &lt;Rectangle
+            Fill="#33CC66"
+            Width="2in"       Height="1in"
+            Canvas.Top="25"          Canvas.Left="50"
+            StrokeThickness="6px" Stroke="Orange" /&gt;
+    &lt;/Grid&gt;
+[/sourcecode]</p>
+
+<p>This Xaml code will create a simple rectangle with border and if you run this application, It will show following shape inside your browser.</p>
+
+<p><img src="https://gkasoq.bay.livefilestore.com/y1pno2mRmcxK60x2XCCUpEH8AdIRl57EHzXxvUEScNJyTbdTGqN0TRpA25pd4ooBhFy-cQ9A7mOlpMz081IkhZQlhg9rhsmFeO8/02BrowserRectangle.png?psid=1" alt="" /></p>
+
+<p><strong>Deploying a WPF application</strong></p>
+
+<p>There are multiple ways to do that. Simply you can publish your application using visual studio. Right-click on project and select publish menu. Publish wizard is displayed. Follow the steps until the end of publish steps.</p>
+
+<p>You must follow Microsoft instruction for <a href="https://msdn.microsoft.com/en-us/library/ms752346.aspx">How to: Configure IIS 5.0 and IIS 6.0 to Deploy WPF Applications</a> to configure your server and client requires Internet Explorer plus .Net Framework to run this application.</p>
+
+<p>Basically internet application which runs inside the browsers should have restricted access to critical resources. It means WPF browser application -By default- should respect to these restrictions so that client can make sure there is no harm to execute this application. Browser Enabled application by default is marked as partially trusted and ClickOnce security setting is set to Internet Zone so that your application will be running on the client browser without any problem.</p>
+
+<p><img src="https://gkasoq.bay.livefilestore.com/y1p2yMA3hrhMwt0iBWIUIIxE0kfNCGovL0YPJE27avS6fATUyXgPmATXdE8EH0G4w5m-wsW9E84rBfviY_Vt0AFxzHer8bMiQrn/03ProjectSecurity.png?psid=1" alt="" /></p>
+
+<p>As you see “Enable ClickOnce security settings” and “This is a partial trust application” are ticked by default and and ClickOnce manifests is signed by a temporary key. Which means on one your application will be restricted to security permission which is fully described in this <a href="https://msdn.microsoft.com/en-us/library/aa970910.aspx">document</a>. On the other hand your application will be executed on client browser without any other additional configuration.</p>
+
+<p><img src="https://gkasoq.bay.livefilestore.com/y1pKjv-M2LBhfxzwWwSd_L29SOoyeqW5BcSkFwkyOQmjzksBojy0rFiaCALaIDovh5S7ieC6j-sV7cqiPiULDVI3idjIL9e3EwZ/04InternetZone.png?psid=1" alt="" /></p>
+
+<p>Above picture shows that you can run This simple WPF Browser Enabled application in “Internet Zone”.</p>
+
+<p>The main reason of writing this post series for me is hosting windows form application inside XBAP application and running inside browser. In next post we will see how to host an existing windows form application within a WPF Browser application.</p>
+
+<p><em>Sample project is also available you can download it <a href="https://gkasoq.bay.livefilestore.com/y1pMj5rWwxWH0xh978PfXKv51b9cKKKJ2zKKHaycMMZbHVm6kHqLQbIOej8nUumLrJYZlMQbeCSbDSxCQier38MWVQvihSHve5O/SimpleBrowserApplication.zip?download&amp;psid=1">here</a></em></p>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#XBAP">XBAP</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=How+to+create+a+simple+Browser+Enabled+WPF+application&url=http%3A%2F%2F0.0.0.0%3A4000%2F2011%2F05%2Fhow-to-create-a-simple-browser-enabled-wpf-application%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2F0.0.0.0%3A4000%2F2011%2F05%2Fhow-to-create-a-simple-browser-enabled-wpf-application%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2010/09/how-to-propagate-wcf-impersonation-to-com-objects/" data-toggle="tooltip" data-placement="top" title="HOW TO propagate WCF Impersonation to COM objects">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2011/05/how-to-host-a-windows-form-application-inside-xbap/" data-toggle="tooltip" data-placement="top" title="How to host a windows form application inside XBAP">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'ahmadreza';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="https://github.com/ahmad2x4" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/ahmad2x4" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li><li><a href="https://linkedin.com/in/ahmadreza" title="LinkedIn"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">LinkedIn</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Ahmad Atighechi
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://0.0.0.0:4000/">ahmadreza.com</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  </body>
+</html>

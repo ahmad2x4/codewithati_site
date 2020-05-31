@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>IL superset of all .net languages</title>
+
+  <meta name="author" content="Ahmad Atighechi" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ahmadreza's blog - This site is my personal notes and opinions about software development" href="http://0.0.0.0:4000/feed.xml" />
+
+  
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M98DF4N');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+<!-- Google Analytics -->
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-4419700-1', 'auto');
+    ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="IL superset of all .net languages" />
+  
+
+   
+  <meta property="og:description" content="In .net world you can choose your language and write your application with best language which matches your requirements. Different languages has different paradigm. For example C# started with static/strongly type paragoge  but over years it has been evolved and now it does support functional programming as well as dynamic....">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="http://0.0.0.0:4000/2014/01/il-superset-of-all-net-languages/" />
+  <link rel="canonical" href="http://0.0.0.0:4000/2014/01/il-superset-of-all-net-languages/" />
+  
+
+  
+  <meta property="og:image" content="http://0.0.0.0:4000/img/avatar-icon.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="IL superset of all .net languages" />
+  
+
+  
+  <meta name="twitter:description" content="In .net world you can choose your language and write your application with best language which matches your requirements. Different languages has different paradigm. For example C# started with static/strongly type paragoge  but over years it has been evolved and now it does support functional programming as well as dynamic....">
+  
+
+  
+  <meta name="twitter:image" content="http://0.0.0.0:4000/img/avatar-icon.png" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M98DF4N"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="http://0.0.0.0:4000/">Ahmadreza's blog</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/aboutme">About Me</a></li>
+          <li><a href="https://github.com/ahmad2x4/ahmadreza.com/issues/new">Contact</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://0.0.0.0:4000/">
+	      <img class="avatar-img" src="/img/avatar-icon.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>IL superset of all .net languages</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on January 22, 2014</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>In .net world you can choose your language and write your application with best language which matches your requirements. Different languages has different paradigm. For example C# started with static/strongly type paragoge  but over years it has been evolved and now it does support functional programming as well as dynamic. There are many other languages like F#, Visual Basic and fortran.</p>
+
+<p>It is compiler responsibility to generate assembly with proper intermediate language so that CLR (Common Language Runtime) would be able to generate native code (using JIT) and run at run time. Each compilers support subset if intermediate language and provide its flavour using syntactic sugars in the language.</p>
+
+<p><img src="https://ahmadrezaa.files.wordpress.com/2014/01/netlanguages_thumb.png" alt=".Net Languages" title=".Net Languages" /></p>
+
+<p>CLR allows language integration as long as written code comply with Common Language Specification. It means because of differences between languages, if you want to use types generated by other languages, you need to use certain feature of language that are guaranteed to be available in other languages. CLS is the lowest common denominator of language features provided by Microsoft.</p>
+
+<p>However, today I don’t want to highlight CLS, instead I want to mentions that Intermediate Language in some cases has more features which languages like C# didn’t bother to implement.</p>
+
+<p>For example we all know about access modifiers in C#. There is public, private, internal and protected</p>
+<table cellspacing="0" cellpadding="2" width="522" border="2"><tbody>     <tr>       <td valign="top" width="126">Access Modifiers</td>        <td valign="top" width="392">Description</td>     </tr>      <tr>       <td valign="top" width="129">public</td>        <td valign="top" width="389">*public access is the most permissive access level. There is no restrictions on accessing public members*</td>     </tr>      <tr>       <td valign="top" width="132">private</td>        <td valign="top" width="387">*private access is the least permissive access level, private members are accessible only within the body of the class or the struct in which they are declared*</td>     </tr>      <tr>       <td valign="top" width="134">internal</td>        <td valign="top" width="386">*internal types or members are accessible only within files in the same assembly*</td>     </tr>      <tr>       <td valign="top" width="135">protected</td>        <td valign="top" width="385">*A protected member is accessible within its class and by derived class instances*</td>     </tr>      <tr>       <td valign="top" width="136">protected internal</td>        <td valign="top" width="384">visible to derived classes and those of the same assembly</td>     </tr>   </tbody></table>
+
+<p> </p>
+
+<p>OK, now lets have a look on access modifiers in IL</p>
+<table cellspacing="0" cellpadding="2" width="520" border="2"><tbody>     <tr>       <td valign="top" width="136">IL Access Modifier</td>        <td valign="top" width="250">Description</td>        <td valign="top" width="130">C# equivalent</td>     </tr>      <tr>       <td valign="top" width="138">Private</td>        <td valign="top" width="248">The member is accessible only by other members in the same class or struct</td>        <td valign="top" width="131">private</td>     </tr>      <tr>       <td valign="top" width="139">Family</td>        <td valign="top" width="247">The member is accessible by derived types.</td>        <td valign="top" width="131">protected</td>     </tr>      <tr>       <td valign="top" width="140">famandassem</td>        <td valign="top" width="246">The member is accessible by derived types, but only if the derived type is defined in the same assembly.</td>        <td valign="top" width="131">N/A</td>     </tr>      <tr>       <td valign="top" width="141">Assembly</td>        <td valign="top" width="246">The member is accessible by any code in the same assembly</td>        <td valign="top" width="131">internal</td>     </tr>      <tr>       <td valign="top" width="141">famorassem</td>        <td valign="top" width="246">The member is accessible by derived types in any assembly and also by any types within same assembly</td>        <td valign="top" width="131">protected internal</td>     </tr>      <tr>       <td valign="top" width="141">Public</td>        <td valign="top" width="246">The member is accessible by any code in any assembly</td>        <td valign="top" width="132">public</td>     </tr>   </tbody></table>
+
+<p> </p>
+
+<p>As you might have noticed there is no C# equivalent for family or assembly although IL has this keyword. there is not such a thing in VB.Net as well. Now lets have a closer look on a simple sample and generated IL code.</p>
+
+<p>Assume we have two simple project in a solution. A Console Application and a Class Library which console application referenced that. In the Class Library we have a simple class called Super and in console application, beside Program class we have a class derived from Super class called Sub. Lets have a look on their codes.</p>
+
+<p> </p>
+
+<p>Super class source code</p>
+
+<pre><code class="language-C#">
+using System;
+
+namespace ClassLibrary
+{
+    public class Super
+    {
+        protected internal void Foo()
+        {
+            Console.WriteLine("Foo");
+        }
+
+        internal void Method()
+        {
+            
+        }
+    }
+}
+
+</code></pre>
+
+<p>Other class in ClassLibrary Project</p>
+
+<pre><code class="language-C#">
+namespace ClassLibrary
+{
+    public class Other
+    {
+        public void Test()
+        {
+            var super = new Super();
+            super.Foo();
+        }
+        
+    }
+}
+</code></pre>
+
+<p>Sub class in ConsoleApplication</p>
+
+<pre><code class="language-C#">
+using System;
+using ClassLibrary;
+
+namespace ConsoleApplication
+{
+    public class Sub : Super
+    {
+        public void Bar()
+        {
+            Foo();
+            Console.WriteLine("Bar");
+        }
+    }
+}
+
+</code></pre>
+
+<p>Program.cs class in ConsoleApplication</p>
+
+<pre><code class="language-C#">
+using System;
+
+namespace ConsoleApplication
+{
+    class Program
+    {
+        static void Main()
+        {
+            var sub = new Sub();
+            sub.Bar();
+            Console.ReadLine();
+            
+        }
+    }
+}
+
+</code></pre>
+
+<p>Sub class simply calls Foo method which is defined as “protected internal” which in C# means family *or *assembly in IL. If you build and run application you’ll see that Sub class successfully accesses because although it is not in the same assembly but But sub is actually derived from Super class. the output will be</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Foo 
+Bar
+
+</code></pre></div></div>
+
+<p>Cool, now let mess around with the IL and see that would happen if we change that.</p>
+
+<p>If you want to dump the IL of an assembly you can simply open a Visual Studio Command and then go to the folder your assembly exist and run ildasm with following parameters</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ildasm ConsoleApplication.exe /out:ConsoleApplication.il
+
+ildasm ClassLibrary.dll /out:ClassLibrary.il
+
+</code></pre></div></div>
+
+<p>Now, you can open ClassLibrary.il and have a look into generated code. Actually it is a bit long so I just copied part that I’m interested in which is Foo method</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  .method famandassem hidebysig instance void 
+          Foo() cil managed
+  {
+    // Code size       13 (0xd)
+    .maxstack  8
+    IL_0000:  nop
+    IL_0001:  ldstr      &amp;quot;Foo&amp;quot;
+    IL_0006:  call       void [mscorlib]System.Console::WriteLine(string)
+    IL_000b:  nop
+    IL_000c:  ret
+  } // end of method Super::Foo
+
+</code></pre></div></div>
+
+<p>You see that protected internal compiled to famorassem. What would happen if we change this to famandassem and assemble this IL again? Answer is CLR will prevent calling this method and will raise MethodAccessException exception when we call this from console application. But let put this into action and actually test this. So, change the famorassem to famandassem and save the file and use ilasm.exe from Visual Studio Command to assemble this code again. Before assembling this you can delete current ClassLibrary.Dll. To assemble use following command parameters:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ilasm ClassLibrary.il /out:ClassLibrary.dll /dll
+
+</code></pre></div></div>
+
+<p>If you get Operation completed successfully at the end new class library is generated. If you run ConsoleApplication.exe you’ll get following exception because of violating the access level defined in the IL</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Unhandled Exception: System.MethodAccessException: Attempt by method 'ConsoleApp
+lication.Sub.Bar()' to access method 'ClassLibrary.Super.Foo()' failed.
+   at ConsoleApplication.Sub.Bar() in f:\Users\ara\Documents\Visual Studio 2013\
+Projects\ConsoleApplication3\ConsoleApplication3\Sub.cs:line 10
+   at ConsoleApplication.Program.Main() in f:\Users\ara\Documents\Visual Studio
+2013\Projects\ConsoleApplication3\ConsoleApplication3\Program.cs:line 10
+
+</code></pre></div></div>
+
+<p>famandassem means that only derived class within same assembly will have access to that member. Just for the sake of testing lets Super to the ConsoleApplication and see if it works.</p>
+
+<p>Open ClassLIbrary.il in a text editor. Copy following IL code which is Super class il code</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+// =============== CLASS MEMBERS DECLARATION ===================
+
+.class public auto ansi beforefieldinit ClassLibrary.Other
+       extends [mscorlib]System.Object
+{
+  .method public hidebysig instance void 
+          Test() cil managed
+  {
+    // Code size       15 (0xf)
+    .maxstack  1
+    .locals init ([0] class ClassLibrary.Super super)
+    IL_0000:  nop
+    IL_0001:  newobj     instance void ClassLibrary.Super::.ctor()
+    IL_0006:  stloc.0
+    IL_0007:  ldloc.0
+    IL_0008:  callvirt   instance void ClassLibrary.Super::Foo()
+    IL_000d:  nop
+    IL_000e:  ret
+  } // end of method Other::Test
+
+  .method public hidebysig specialname rtspecialname 
+          instance void  .ctor() cil managed
+  {
+    // Code size       7 (0x7)
+    .maxstack  8
+    IL_0000:  ldarg.0
+    IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+    IL_0006:  ret
+  } // end of method Other::.ctor
+
+} // end of class ClassLibrary.Other
+
+.class public auto ansi beforefieldinit ClassLibrary.Super
+       extends [mscorlib]System.Object
+{
+  .method famandassem hidebysig instance void 
+          Foo() cil managed
+  {
+    // Code size       13 (0xd)
+    .maxstack  8
+    IL_0000:  nop
+    IL_0001:  ldstr      "Foo"
+    IL_0006:  call       void [mscorlib]System.Console::WriteLine(string)
+    IL_000b:  nop
+    IL_000c:  ret
+  } // end of method Super::Foo
+
+  .method assembly hidebysig instance void 
+          Method() cil managed
+  {
+    // Code size       2 (0x2)
+    .maxstack  8
+    IL_0000:  nop
+    IL_0001:  ret
+  } // end of method Super::Method
+
+  .method public hidebysig specialname rtspecialname 
+          instance void  .ctor() cil managed
+  {
+    // Code size       7 (0x7)
+    .maxstack  8
+    IL_0000:  ldarg.0
+    IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+    IL_0006:  ret
+  } // end of method Super::.ctor
+
+} // end of class ClassLibrary.Super
+
+
+// =============================================================
+
+</code></pre></div></div>
+
+<p>Now open ConsoleApplication.il and paste this code at the end after end of Class ConsoleApplication.Sub.</p>
+
+<p>We need to do one more thing and get rid off reference to ClassLibrary.il which we don’t need anymore. So right in the beginning there is some code for that. Delete that piece of code and save the file.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+.assembly extern ClassLibrary
+{
+  .ver 1:0:0:0
+}
+
+</code></pre></div></div>
+
+<p>One more thing to do and it is replacing all [ClassLibrary] with empty string.</p>
+
+<p>Delete console application and assemble the il to make new ConsoleApplication.exe using following command</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ilasm ConsoleApplication.il /exe /out:ConsoleApplication.exe
+
+</code></pre></div></div>
+
+<p>Now we have new ConsoleApplication which doesn’t have reference to ClassLibrary. Run ConsoleApplication.exe you see it runs successfully.</p>
+
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#C#">C#</a>
+          
+            <a href="/tags#IL">IL</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=IL+superset+of+all+.net+languages&url=http%3A%2F%2F0.0.0.0%3A4000%2F2014%2F01%2Fil-superset-of-all-net-languages%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2F0.0.0.0%3A4000%2F2014%2F01%2Fil-superset-of-all-net-languages%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2011/11/quick-note-memory-leak-or-missing-configuration/" data-toggle="tooltip" data-placement="top" title="Quick Note: Memory Leak Or Missing Configuration ">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2014/01/value-type-field-members-are-in-heap/" data-toggle="tooltip" data-placement="top" title="Value type field members are in heap">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'ahmadreza';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="https://github.com/ahmad2x4" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/ahmad2x4" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li><li><a href="https://linkedin.com/in/ahmadreza" title="LinkedIn"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">LinkedIn</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Ahmad Atighechi
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://0.0.0.0:4000/">ahmadreza.com</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  </body>
+</html>

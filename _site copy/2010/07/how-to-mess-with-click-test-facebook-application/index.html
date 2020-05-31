@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>How to mess with &quot;click test&quot; facebook application</title>
+
+  <meta name="author" content="Ahmad Atighechi" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ahmadreza's blog - This site is my personal notes and opinions about software development" href="http://0.0.0.0:4000/feed.xml" />
+
+  
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M98DF4N');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+<!-- Google Analytics -->
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-4419700-1', 'auto');
+    ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="How to mess with &quot;click test&quot; facebook application" />
+  
+
+   
+  <meta property="og:description" content="Couple of days ago I came across a fantastic challenging application in Facebook which is called “click test”. This application measures your click per second and you have to click as much as you can in 10 seconds. For sure in my 130 friend there are many who can click...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="http://0.0.0.0:4000/2010/07/how-to-mess-with-click-test-facebook-application/" />
+  <link rel="canonical" href="http://0.0.0.0:4000/2010/07/how-to-mess-with-click-test-facebook-application/" />
+  
+
+  
+  <meta property="og:image" content="http://0.0.0.0:4000/img/avatar-icon.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="How to mess with &quot;click test&quot; facebook application" />
+  
+
+  
+  <meta name="twitter:description" content="Couple of days ago I came across a fantastic challenging application in Facebook which is called “click test”. This application measures your click per second and you have to click as much as you can in 10 seconds. For sure in my 130 friend there are many who can click...">
+  
+
+  
+  <meta name="twitter:image" content="http://0.0.0.0:4000/img/avatar-icon.png" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M98DF4N"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="http://0.0.0.0:4000/">Ahmadreza's blog</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/aboutme">About Me</a></li>
+          <li><a href="https://github.com/ahmad2x4/ahmadreza.com/issues/new">Contact</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://0.0.0.0:4000/">
+	      <img class="avatar-img" src="/img/avatar-icon.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>How to mess with &quot;click test&quot; facebook application</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on July 27, 2010</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>Couple of days ago I came across a fantastic challenging application in Facebook which is called “click test”. This application measures your click per second and you have to click as much as you can in 10 seconds. For sure in my 130 friend there are many who can click more than me, but I had to do my bests especially a friend of mine (Kambiz) who is not only good at typing and clicking but also good programming. What should I do! should I left the battle or keep challenging? Of course I have to stay in this battle. I tried to score a good click per second but honestly the best I did was about 90 clicks per second which is lower than lots of my friends.</p>
+
+<p>What is “click test” application? This is a simple but</p>
+
+<p>ton that you have to click on with a countdown timer which runs inside browser. Ok, the first thing pops in mind is writing a simple application to simulate clicking on this button. Ohhh, you have to find browser windows handle then use SendMessage with appropriate (wParam, lParam) parameters to simulate clicking on specific area of window. That sounds great. But the fact is I’m more JavaScript and HTML guy than <em>API</em> guy. So let Keep It Simple Stupid (KISS).</p>
+
+<p>If you view source of “test” application page you’ll face huge amount of complex source code which is really complicated. At the beginning I wanted to find the function which is responsible for counting down t from 10 to zero and then increase it but the code is really messy and it takes time to find the function you want. Should I inspect all HTML and Jscript source code? The answer is No</p>
+
+<p>Recently browsers are delivered with quite sophisticated feature for developers. For example Internet Explorer 8 has got famous feature which is called “Developer Tools” and you can activate it by pressing F12. Having pressed F12, nice window will be displayed to help you debug your HTML and JavaScript.</p>
+
+<p><img src="https://gkasoq.bay.livefilestore.com/y1pgb6p3gjZOvci4CQ4-CI8jaf-iguAubvX2uR7xqNdULrrHKx7My7QYsQJKS_Ey24_5EkYK3uhsZrr-BmF6jNaLllFNFjkYWiF/DeveloperTools.png?psid=1" alt="" /></p>
+
+<p>Ok to find start button you can press Ctrl+B or select Find -&gt; Select element by click.</p>
+
+<p><img src="https://public.bay.livefilestore.com/y1pvcpmP8PZM8fATmWYqu4qorK5fLe5RiOrgUvLf_p3mfjiNjptuccwSSDi6mJd9oy1GThRDnutlhRfp5d7V8eeag/TestPage.png?psid=1" alt="" /></p>
+
+<p>Then move your mouse to element that you want inside browse.</p>
+
+<p><img src="https://public.bay.livefilestore.com/y1p-DlrtiOiedIskHyea18dPshXMhqGwmLTSfEjIu5HOunS6JA3IPGMJAlLk20Uxq7hw3qEKTNPGGb0faOrP8LF2Q/DeveloperTools2.png?psid=1" alt="" /></p>
+
+<p>As soon as you move your mouse inside browse you’ll notice that browser mark current element by bordering it. So find start button and then click on it. Gotcha! Developer tools automatically scrolls to input tag related to selected element. You can also scroll horizontally to find “onmouseup” which is actually responsible for counting your clicks. Ok, double click inside onmouseup and then press Ctrl+A to select all body of onmouseup.</p>
+
+<p><img src="https://public.bay.livefilestore.com/y1pxbt7UDMLPbPjHtq80EfxPHVQ46mbNVwYx2kurFfhJRgXx00ZOXkGdLi7vTeCr5Vrdb2h9zcSRNQujGQOhHGHBA/DeveloperTools3.png?psid=1" alt="" /></p>
+
+<p>So I can copy this element into clipboard and then paste in notepad. You may also have somthing similar to following:</p>
+<div id="scid:887EC618-8FBE-49a5-A908-2339AF2EC720:53eb48f1-2c8a-4c29-b26a-e6be489cadbc" class="wlWriterEditableSmartContent" style="display:inline;float:none;margin:0;padding:0;">[sourcecode language="javascript"]
+fbjs_sandbox.instances.a130168443678744.bootstrap();
+return fbjs_dom.eventHandler.call([fbjs_dom.get_instance(this,130168443678744),function(a130168443678744_event)
+{a130168443678744_game.update($FBJS.ref(this).getForm())},130168443678744],new fbjs_event(event));
+[/sourcecode]
+
+</div>
+<p>Actually this is an event handler and this code runs every time you click on your mouse button. But it’s rather complicated. It calls a function at first and then calls another function. So If I want to change this code I have to find these functions and then change body of them.</p>
+
+<p>But what if I don’t change any code and just make this event handler to run multiple times per click. That is sound good idea. So let copy and paste event handler for couple of times. But I should notice that second function call has “return” and I have to remove it for my new copies, and just leave it for last one.</p>
+<div id="scid:887EC618-8FBE-49a5-A908-2339AF2EC720:31c95ce5-dccf-446d-8f59-bcb17247d81c" class="wlWriterEditableSmartContent" style="display:inline;float:none;margin:0;padding:0;">[sourcecode language="csharp"]
+fbjs_sandbox.instances.a130168443678744.bootstrap();
+fbjs_dom.eventHandler.call([fbjs_dom.get_instance(this,130168443678744),function(a130168443678744_event)
+{a130168443678744_game.update($FBJS.ref(this).getForm())},130168443678744],new fbjs_event(event));
+fbjs_sandbox.instances.a130168443678744.bootstrap();
+fbjs_dom.eventHandler.call([fbjs_dom.get_instance(this,130168443678744),function(a130168443678744_event)
+{a130168443678744_game.update($FBJS.ref(this).getForm())},130168443678744],new fbjs_event(event));
+fbjs_sandbox.instances.a130168443678744.bootstrap();
+return fbjs_dom.eventHandler.call([fbjs_dom.get_instance(this,130168443678744),
+function(a130168443678744_event)
+{a130168443678744_game.update($FBJS.ref(this).getForm())},130168443678744],new fbjs_event(event));
+[/sourcecode]
+
+</div>
+<p>As you see I copied all code for three times and left return just for last call. It means my clicks will be tripled and I can register 150 clicks just for 50. It’s good. So let’s copy this code back to onmouseup element it is ready for testing.</p>
+
+<p>Enjoy it!</p>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#Developer Tools">Developer Tools</a>
+          
+            <a href="/tags#Facebook">Facebook</a>
+          
+            <a href="/tags#Internet Explorer">Internet Explorer</a>
+          
+            <a href="/tags#JavaScript">JavaScript</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=How+to+mess+with+%26quot%3Bclick+test%26quot%3B+facebook+application&url=http%3A%2F%2F0.0.0.0%3A4000%2F2010%2F07%2Fhow-to-mess-with-click-test-facebook-application%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2F0.0.0.0%3A4000%2F2010%2F07%2Fhow-to-mess-with-click-test-facebook-application%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2010/07/webcamps-sydney-day-1-part-2/" data-toggle="tooltip" data-placement="top" title="WEBCAMPS Sydney Day 1 / Part 2">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2010/08/updating-my-using-with-windows-live-writer/" data-toggle="tooltip" data-placement="top" title="Updating my using with Windows Live Writer">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'ahmadreza';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="https://github.com/ahmad2x4" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/ahmad2x4" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li><li><a href="https://linkedin.com/in/ahmadreza" title="LinkedIn"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">LinkedIn</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Ahmad Atighechi
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://0.0.0.0:4000/">ahmadreza.com</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  </body>
+</html>

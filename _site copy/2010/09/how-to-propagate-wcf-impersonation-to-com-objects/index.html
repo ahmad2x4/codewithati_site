@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>HOW TO propagate WCF Impersonation to COM objects</title>
+
+  <meta name="author" content="Ahmad Atighechi" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ahmadreza's blog - This site is my personal notes and opinions about software development" href="http://0.0.0.0:4000/feed.xml" />
+
+  
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M98DF4N');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+<!-- Google Analytics -->
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-4419700-1', 'auto');
+    ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="HOW TO propagate WCF Impersonation to COM objects" />
+  
+
+   
+  <meta property="og:description" content="I was working on a project to write a wrapper on a COM component in WCF. The COM object needs impersonation in some levels to provide certain functionalities to impersonated user. Basically impersonation in .Net application doesn’t propagate COM calls. I’ve seen following sentence in How To: Use Impersonation and...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="http://0.0.0.0:4000/2010/09/how-to-propagate-wcf-impersonation-to-com-objects/" />
+  <link rel="canonical" href="http://0.0.0.0:4000/2010/09/how-to-propagate-wcf-impersonation-to-com-objects/" />
+  
+
+  
+  <meta property="og:image" content="http://0.0.0.0:4000/img/avatar-icon.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="HOW TO propagate WCF Impersonation to COM objects" />
+  
+
+  
+  <meta name="twitter:description" content="I was working on a project to write a wrapper on a COM component in WCF. The COM object needs impersonation in some levels to provide certain functionalities to impersonated user. Basically impersonation in .Net application doesn’t propagate COM calls. I’ve seen following sentence in How To: Use Impersonation and...">
+  
+
+  
+  <meta name="twitter:image" content="http://0.0.0.0:4000/img/avatar-icon.png" />
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M98DF4N"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="http://0.0.0.0:4000/">Ahmadreza's blog</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/aboutme">About Me</a></li>
+          <li><a href="https://github.com/ahmad2x4/ahmadreza.com/issues/new">Contact</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://0.0.0.0:4000/">
+	      <img class="avatar-img" src="/img/avatar-icon.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>HOW TO propagate WCF Impersonation to COM objects</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on September 16, 2010</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>I was working on a project to write a wrapper on a COM component in WCF. The COM object needs impersonation in some levels to provide certain functionalities to impersonated user. Basically impersonation in .Net application doesn’t propagate COM calls. I’ve seen following sentence in<a href="https://msdn.microsoft.com/en-us/library/ff647404.aspx"> How To: Use Impersonation and Delegation in ASP.NET 2.0</a></p>
+
+<blockquote>
+  <p><em>The impersonation token does not propagate across threads if you use COM interop with components that have incompatible threading models, or if you use unmanaged techniques to create new threads</em></p>
+</blockquote>
+
+<p>Actually I have a COM component and I want to use this component in my WCF Services. One of classes in COM object has got a property which returns current user. I wrote a console application to test impersonation and see if impersonation does propagate to COM object or not. I wrote a class for impersonation and  it has a method called “ImpersonateUser” that impersonates to passed username and password.  Following code returns different username for .net and COM object. It means it doesn’t propagate to COM object.</p>
+
+<pre><code class="language-CSharp">
+static void Main(string[] args)
+{
+	DoWork();
+	Console.ReadLine();
+}
+
+private static void DoWork()
+{
+	ImpersonateClass impersonate = new ImpersonateClass();
+	using (impersonate.ImpersonateUser("AnotherUser",
+					"Domain",
+					"passw0rd"))
+	{
+		COMTESTLib.TestClass obj = new COMTESTLib.TestClass();
+		Console.WriteLine(string.Format("COM:{0} .Net:{1}", obj.CurrentUserName,
+			System.Security.Principal.WindowsIdentity.GetCurrent().Name));
+	}
+}
+//Returns:COM:DOMAIN\CurrentUser .Net:DOMAIN\AnotherUser&amp;lt;/pre&amp;gt;
+
+</code></pre>
+
+<p>But I used CoInitializeSecurity to initialize security with impersonation and cloaking. CoInitializeSecurity should be called before any marshalling so I called CoInitializeSecurity as first function call.</p>
+
+<pre><code class="language-CSharp">
+[DllImport("ole32.dll")]
+public static extern int CoInitializeSecurity(IntPtr pVoid, int
+cAuthSvc, IntPtr asAuthSvc, IntPtr pReserved1, RpcAuthnLevel level,
+RpcImpLevel impers, IntPtr pAuthList, int dwCapabilities, IntPtr
+pReserved3);
+
+static void Main(string[] args)
+{
+	int result = CoInitializeSecurity(IntPtr.Zero, -1,
+	IntPtr.Zero, IntPtr.Zero,
+	RpcAuthnLevel.Connect, RpcImpLevel.Impersonate,
+	IntPtr.Zero, Convert.ToInt32(EoAuthnCap.DynamicCloaking), IntPtr.Zero);
+
+	DoWork();
+	Console.ReadLine();
+}
+
+private static void DoWork()
+{
+	ImpersonateClass impersonate = new ImpersonateClass();
+	using (impersonate.ImpersonateUser("AnotherUser",
+					"domain",
+					"passw0rd"))
+	{
+		COMTESTLib.TestClass obj = new COMTESTLib.TestClass();
+		Console.WriteLine(string.Format("COM:{0} .Net:{1}", obj.CurrentUserName,
+			System.Security.Principal.WindowsIdentity.GetCurrent().Name));
+	}
+}
+//Returns:COM:DOMAIN\AnotherUser .Net:DOMAIN\AnotherUser&amp;lt;/pre&amp;gt;
+
+</code></pre>
+
+<p>Somebody suggested using built-in impersonation method for WCF so I changed my service to following code by setting [OperationBehavior(Impersonation = ImpersonationOption.Required)] and some changes in Web.Congif to make it work.</p>
+
+<pre><code class="language-CSharp">[OperationBehavior(Impersonation = ImpersonationOption.Required)]
+public string GetUserNames()
+{
+	return DoWork();
+}
+
+private string DoWork()
+{
+	string result;
+
+	COMTESTLib.TestClass obj = new COMTESTLib.TestClass();
+	result = string.Format("COM:{0} .Net:{1}", obj.CurrentUserName,
+		System.Security.Principal.WindowsIdentity.GetCurrent().Name);
+
+	return result;
+}
+
+</code></pre>
+<p>I passed user credentials from client for impersonation.</p>
+
+<pre><code class="language-CSharp">static void Main(string[] args)
+{
+	ServiceReference.ServiceImpersonateClient client = new ServiceReference.ServiceImpersonateClient();
+	client.ClientCredentials.Windows.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Delegation;
+	client.ClientCredentials.Windows.ClientCredential.Domain = "Domain";
+	client.ClientCredentials.Windows.ClientCredential.UserName = "AnotherUser";
+	client.ClientCredentials.Windows.ClientCredential.Password = "Passw0rd";
+
+	string str = client.GetUserNames();
+	Console.WriteLine(str);
+	Console.ReadLine();
+	client.Close();
+}
+// Returns COM:DOMAIN\CurrentUser .Net:DOMAIN\AnotherUser
+
+</code></pre>
+
+<p>But it returns different usernames which means impersonation of WCF does not propagate to COM object.</p>
+
+<p>Ok I posted this issue in <a href="https://social.msdn.microsoft.com/Forums/en-US/wcf/thread/ec442221-f750-4253-ac12-b41ab6e4ba1b/#c7b7fa20-b9b7-4576-9ca5-c2c21c6cf909">WCF Forum</a> and I’ve got a simple response but it gave me a good clue. Allen Chen (The moderator) suggested me to use self-hosting for WCF instead of IIS hosting.</p>
+
+<p>Self-hosted WCF was great idea!  Actually it works on self-hosted. But my WCF service should be unattended so that I created a managed service for WCF hosting. To make it work I’ve created three projects. One WCF service library which is used in managed service application. And the third one is a console application for testing. I’ve called CoInitializeSecurity on constructor of my service class as following</p>
+
+<pre><code class="language-CSharp">
+private ServiceHost serviceHost;
+ public WCFServiceHost()
+ {
+  int result = CoInitializeSecurity(IntPtr.Zero, -1,
+  IntPtr.Zero, IntPtr.Zero,
+  RpcAuthnLevel.Connect, RpcImpLevel.Impersonate,
+  IntPtr.Zero, Convert.ToInt32(EoAuthnCap.DynamicCloaking), IntPtr.Zero);
+  //EventLog.WriteEntry(result.ToString());
+  InitializeComponent();
+ }
+
+ protected override void OnStart(string[] args)
+ {
+  if (serviceHost != null)
+  {
+  serviceHost.Close();
+  }
+
+  // Create a ServiceHost for the CalculatorService type and
+  // provide the base address.
+  serviceHost = new ServiceHost(typeof(ServiceImpersonate));
+
+  // Open the ServiceHostBase to create listeners and start
+  // listening for messages.
+
+  serviceHost.Open();
+
+ }
+
+ protected override void OnStop()
+ {
+  if (serviceHost != null)
+  {
+  serviceHost.Close();
+  serviceHost = null;
+  }
+ }
+
+</code></pre>
+
+<p>]It doesn’t work with built in WCF impersonation. But I used my impersonation class inside the service class to impersonate to desired user and it works.</p>
+
+<pre><code class="language-CSharp">public string GetUserNames()
+ {
+  ImpersonateClass impersonate = new ImpersonateClass();
+
+  using (impersonate.ImpersonateUser("AnotherUser",
+         "Domain",
+          "passw0rd"))
+  {
+   return DoWork();
+  }
+ }
+
+ private string DoWork()
+ {
+  string result;
+
+   COMTESTLib.TestClass obj = new COMTESTLib.TestClass();
+   result = string.Format("COM:{0} .Net:{1}", obj.CurrentUserName,
+       System.Security.Principal.WindowsIdentity.GetCurrent().Name);
+  return result;
+ }
+
+</code></pre>
+
+<p>In the console application I simply called my service like following code:</p>
+
+<pre><code class="language-CSharp">ServiceReference.ServiceImpersonateClient client = new ServiceReference.ServiceImpersonateClient();
+  string str = client.GetUserNames();
+  Console.WriteLine(str);
+  client.Close();
+  Console.ReadLine();
+// Returns COM:DOMAIN\ AnotherUser .Net:DOMAIN\AnotherUser
+
+</code></pre>
+
+<blockquote>
+  <p><em>When you host WCF in IIS the process is spawned by IIS and before your code running code managed by IIS will be run in the process, which is almost out of your control. CoInitializeSecurity thus might be called before you calling it.</em></p>
+</blockquote>
+
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#COM">COM</a>
+          
+            <a href="/tags#Impersonation">Impersonation</a>
+          
+            <a href="/tags#WCF">WCF</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=HOW+TO+propagate+WCF+Impersonation+to+COM+objects&url=http%3A%2F%2F0.0.0.0%3A4000%2F2010%2F09%2Fhow-to-propagate-wcf-impersonation-to-com-objects%2F"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2F0.0.0.0%3A4000%2F2010%2F09%2Fhow-to-propagate-wcf-impersonation-to-com-objects%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2010/08/updating-my-using-with-windows-live-writer/" data-toggle="tooltip" data-placement="top" title="Updating my using with Windows Live Writer">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2011/05/how-to-create-a-simple-browser-enabled-wpf-application/" data-toggle="tooltip" data-placement="top" title="How to create a simple Browser Enabled WPF application">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'ahmadreza';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="https://github.com/ahmad2x4" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/ahmad2x4" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li><li><a href="https://linkedin.com/in/ahmadreza" title="LinkedIn"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">LinkedIn</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Ahmad Atighechi
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://0.0.0.0:4000/">ahmadreza.com</a>
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  </body>
+</html>
